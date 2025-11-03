@@ -22,3 +22,17 @@ class TasksModel(QAbstractListModel):
         elif role == Qt.ItemDataRole.UserRole:
             return task
         return None
+
+    def toggle_task(self, task):
+        if task not in self.__tasks:
+            return
+        self.__tasks[task] = not self.__tasks[task]
+        row = list(self.__tasks.keys()).index(task)
+        index = self.index(row, 0)
+        self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.UserRole])
+        self.modelChanged.emit()
+
+    def tasks_count(self):
+        total = len(self.__tasks)
+        done = sum(1 for done in self.__tasks.values() if done)
+        return total, done
