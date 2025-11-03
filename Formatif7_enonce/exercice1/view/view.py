@@ -1,5 +1,3 @@
-from asyncio import tasks
-
 from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtWidgets import QMainWindow, QListView
 from PyQt6.uic import loadUi
@@ -7,7 +5,7 @@ from PyQt6.uic import loadUi
 
 class TasksView(QMainWindow):
     tasksListView:QListView
-    itemClicked: pyqtSignal(str)
+    itemClicked = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
