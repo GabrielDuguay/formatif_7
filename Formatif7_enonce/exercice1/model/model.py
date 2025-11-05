@@ -30,3 +30,12 @@ class TasksModel(QAbstractListModel):
         total = len(self.__tasks)
         done = sum(1 for done in self.__tasks.values() if done)
         return total, done
+
+    def toggle_task(self, task_name):
+        row = list(self.__tasks.keys()).index(task_name)
+
+        self.__tasks[task_name] = not self.__tasks[task_name]
+
+        model_index = self.index(row)
+        self.dataChanged.emit(model_index, model_index, [Qt.ItemDataRole.CheckStateRole])
+        self.modelChanged.emit()
