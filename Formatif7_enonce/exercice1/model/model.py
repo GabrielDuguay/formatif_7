@@ -23,13 +23,7 @@ class TasksModel(QAbstractListModel):
             return task
         return None
 
-    def toggle_task(self, task):
-        if task not in self.__tasks:
-            return
-        self.__tasks[task] = not self.__tasks[task]
-        row = list(self.__tasks.keys()).index(task)
-        index = self.index(row, 0)
-        self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.UserRole])
+    def notify_loaded(self):
         self.modelChanged.emit()
 
     def tasks_count(self):
