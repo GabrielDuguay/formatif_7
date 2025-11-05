@@ -11,13 +11,13 @@ class TasksController(QObject):
         self.read_view = readonly_view
 
         self.view.tasksListView.setModel(self.model)
-        self.view.itemClicked.connect(self.clicked)
+        self.view.itemClicked.connect(self._toggle_task_state)
         self.model.modelChanged.connect(self.update_read_view)
 
         self.model.notify_loaded()
 
-    def clicked(self, task_name):
-        print("saafdasf ->", task_name)
+    def _toggle_task_state(self, task_name):
+        self.model.toggle_task(task_name)
 
     def update_read_view(self):
         total, done = self.model.tasks_count()
