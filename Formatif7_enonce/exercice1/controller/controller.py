@@ -14,6 +14,8 @@ class TasksController(QObject):
         self.view.itemClicked.connect(self.clicked)
         self.model.modelChanged.connect(self.update_read_view)
 
+        self.model.notify_loaded()
+
     def clicked(self, task_name):
         print("saafdasf ->", task_name)
 
