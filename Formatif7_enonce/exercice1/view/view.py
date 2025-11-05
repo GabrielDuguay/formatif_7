@@ -1,13 +1,17 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton
+from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtWidgets import QMainWindow, QListView
 from PyQt6.uic import loadUi
 
 
-class TasksReadOnlyView(QWidget):
-    label: QLabel
+class TasksView(QMainWindow):
+    tasksListView:QListView
+    itemClicked = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
-        loadUi("view/ui/tasksReadOnlyView.ui", self)
+        loadUi("view/ui/tasksView.ui", self)
+        self.tasksListView.clicked.connect(self._relay_click)
 
-    def update_summary(self, total, done):
-        self.label.setText(f"Nombre de taches : {total} dont {done} sont effectuées")
+    def _relay_click(self, index):
+        value = index.data(Qt.ItemDataRole.UserRole)
+        self.itemClicked.emit(value)
